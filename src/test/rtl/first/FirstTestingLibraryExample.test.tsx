@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Example from "./TestingLibraryExample";
+import Example from "./FirstTestingLibraryExample";
 
 /*
 やっていることは全てシンプル。
@@ -59,3 +59,9 @@ test("findAllByTextのサンプル", async () => {
   const element = await screen.findAllByText("morning");
   expect(element).toHaveLength(2);
 });
+
+/*
+要素を取得する関数は色々種類があります。
+概要やどれを優先的に使えば良いかは公式ドキュメントにスッキリまとまっています。
+https://testing-library.com/docs/queries/about/#priority
+*/
