@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Example from "./FirstTestingLibraryExample";
 
 /*
-やっていることは全てシンプル。
+ここではReactTestingLibraryの基本として、以下の3つのことを学ぶ。
 1. コンポーネントをテスト用に描画する。
 2. コンポーネントの中から引数に渡した文字列を含む要素を取得する。
 3. 取得した要素が描画されているかどうかをテストする。

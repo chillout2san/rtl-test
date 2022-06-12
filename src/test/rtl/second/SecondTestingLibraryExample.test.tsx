@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Example from "./SecondTestingLibraryExample";
 
 /*
-さっきまでは文字列で取得していたが、次はRoleを使って取得する。
+ここではRoleを使って要素取得する方法を学ぶ。
 各HTML要素にはデフォルトでRole属性が振られている。
 これを利用して要素を取得する。
 取得方法が異なるだけでやることはfirstと変わらない。
