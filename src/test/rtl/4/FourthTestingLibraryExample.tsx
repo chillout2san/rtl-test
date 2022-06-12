@@ -1,19 +1,51 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-function Power() {
-  const [power, setPower] = useState(false);
-
-  return (
-    <div>
-      <h1>{power ? "ON" : "OFF"} </h1>
-      <button onClick={() => setPower(true)} disabled={power ? true : false}>
-        ON
-      </button>
-      <button onClick={() => setPower(false)} disabled={!power ? true : false}>
-        OFF
-      </button>
-    </div>
-  );
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    };
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
 }
 
-export default Power;
+const Example = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  const fetchUsers = async () => {
+    const { data } = await axios.get<User[]>(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  return (
+    <>
+      <h1>ユーザ一覧</h1>
+      <ul>
+        {users && users.map((user) => <li key={user.id}>{user.name}</li>)}
+      </ul>
+    </>
+  );
+};
+
+export default Example;

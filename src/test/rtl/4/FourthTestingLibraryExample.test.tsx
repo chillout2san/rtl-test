@@ -1,37 +1,27 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Example from "./FourthTestingLibraryExample";
+import axios from "axios";
+import testData from "./testData.json";
 
 /*
-ここではtoEnabledやtoBeDisabledというmatcherを使えば、要素が有効かどうかチェックできるということを学ぶ。
-加えてuserEventを使って、ボタンをクリックする等のユーザーの振る舞いが記述できることを学ぶ。
+ここではaxiosのようなfetcherをmock化する方法について学ぶ。
 */
 
-test("toBeEnabledのテスト", () => {
-  render(<Example />);
-  const element = screen.getByRole("button", {
-    name: "ON",
-  });
-  // ちなみにnot.toBeDisabled()と書いても構わない。
-  // 分かりにくいので、個人的にはnotを使いたくない。
-  expect(element).toBeEnabled();
-});
+// axiosをjestのmockとして使うことを記載。
+jest.mock("axios");
 
-test("toBeDisabledのテスト", () => {
-  render(<Example />);
-  const element = screen.getByRole("button", {
-    name: "OFF",
+test("axiosのmock化のテスト", async () => {
+  // as jest.MockとキャストしないとTypeScriptに怒られます。
+  // 色々方法あるみたいです。(https://stackoverflow.com/questions/69659726/property-mockresolvedvalue-does-not-exist-on-type-t-any-r-axiosresponse)
+  // mockResolvedValueでaxiosの戻り値をmockできます。
+  (axios.get as jest.Mock).mockResolvedValue({
+    data: testData,
   });
-  expect(element).toBeDisabled();
-});
-
-test("userEventのテスト", () => {
+  // 上記のmockResolvedValueをしてからレンダリングするように注意。(mockデータないのでデータ取れないので)
   render(<Example />);
-  const element = screen.getByRole("button", {
-    name: "ON",
-  });
-  // onボタンのクリックを模擬的に行える。
-  // ちなみによくfireEventと比較されるが、とりあえずuserEvent使っておくと良さそう。
-  userEvent.click(element);
-  expect(element).toBeDisabled();
+  const element = await screen.findAllByRole("listitem");
+  // 少なくとも一つは描画されているかをテストする。
+  expect(element[0]).toBeInTheDocument();
+  // 全部描画できているかをテストする。どっちでも良さそう。
+  expect(element).toHaveLength(testData.length);
 });

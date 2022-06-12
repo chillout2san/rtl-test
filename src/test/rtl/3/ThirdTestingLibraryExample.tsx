@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Power() {
+function Example() {
   const [power, setPower] = useState(false);
 
   return (
@@ -16,4 +16,4 @@ function Power() {
   );
 }
 
-export default Power;
+export default Example;
