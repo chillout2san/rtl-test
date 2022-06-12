@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import Example from "./ThirdTestingLibraryExample";
 
 /*
-ここではtoEnabledというmatcherを使えば、要素が有効かどうかチェックできるということを学ぶ。
+ここではtoEnabledやtoBeDisabledというmatcherを使えば、要素が有効かどうかチェックできるということを学ぶ。
 加えてuserEventを使って、ボタンをクリックする等のユーザーの振る舞いが記述できることを学ぶ。
 */
 
