@@ -25,3 +25,17 @@ test("axiosのmock化のテスト", async () => {
   // 全部描画できているかをテストする。どっちでも良さそう。
   expect(element).toHaveLength(testData.length);
 });
+
+test("axiosのmock化のテスト2", async () => {
+  // ただ実際はコンポーネント内でいくつかAPIコールしているのが普通だと思います。
+  // その場合は以下のように書けばurlに応じてtestDataの出し分けが出来ます。
+  (axios.get as jest.Mock).mockImplementation((url) => {
+    if (url === "https://jsonplaceholder.typicode.com/users") {
+      return Promise.resolve({ data: testData });
+    }
+  });
+  render(<Example />);
+  const element = await screen.findAllByRole("listitem");
+  expect(element[0]).toBeInTheDocument();
+  expect(element).toHaveLength(testData.length);
+});
